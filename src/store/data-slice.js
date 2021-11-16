@@ -1,0 +1,56 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const dataSlice = createSlice({
+  name: "data",
+  initialState: {
+    tabsInfo: [
+      {
+        name: "Activity",
+        link: "/activity",
+      },
+      {
+        name: "Archive",
+        link: "/archive",
+      },
+    ],
+    dommyData: [
+      {
+        id: 7834,
+        created_at: "2018-04-19T09:38:41.000Z",
+        direction: "outbound",
+        from: "Pierre-Baptiste Béchu",
+        to: "06 46 62 12 33",
+        via: "NYC Office",
+        duration: "120",
+        is_archived: false,
+        call_type: "missed",
+      },
+      {
+        id: 7833,
+        created_at: "2018-04-18T16:59:48.000Z",
+        direction: "outbound",
+        from: "Jonathan Anguelov",
+        to: "06 45 13 53 91",
+        via: "NYC Office",
+        duration: "60",
+        is_archived: false,
+        call_type: "missed",
+      },
+      {
+        id: 7832,
+        created_at: "2018-04-18T16:53:22.000Z",
+        direction: "inbound",
+        from: "06 19 18 23 92",
+        to: "Jonathan Anguelov",
+        via: "Support FR",
+        duration: "180",
+        is_archived: false,
+        call_type: "answered",
+      },
+    ],
+  },
+  reducers: {},
+});
+
+export const dataActions = dataSlice.actions;
+export default dataSlice;

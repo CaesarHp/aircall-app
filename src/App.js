@@ -1,24 +1,38 @@
-import Header from "./ui/Header";
+import React from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-const DOMMY_DATA = {
-  id: 7834,
-  created_at: "2018-04-19T09:38:41.000Z",
-  direction: "outbound",
-  from: "Pierre-Baptiste Béchu",
-  to: "06 46 62 12 33",
-  via: "NYC Office",
-  duration: "120",
-  is_archived: false,
-  call_type: "missed",
-};
+import Header from "./components/Header";
+import NavTabs from "./components/NavTabs";
+import Activity from "./pages/Activity";
+import Archive from "./pages/Archive";
+import ActivityDetail from "./pages/ActivityDetail";
 
 function App() {
   return (
     <>
-      <div className="container">
-        <Header className="container" />
-        <div className="container-view">Hello</div>
-      </div>
+      <BrowserRouter>
+        <div className="container">
+          <Header />
+          <NavTabs />
+          <div className="container-view">
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to="/activity" />
+              </Route>
+              <Route path="/activity" exact>
+                <Activity />
+              </Route>
+              <Route path="/archive" exact>
+                <Archive />
+              </Route>
+              <Route path="/activity-detail" exact>
+                <ActivityDetail />
+              </Route>
+              <Route path="*">Page not found</Route>
+            </Switch>
+          </div>
+        </div>
+      </BrowserRouter>
     </>
   );
 }
