@@ -7,7 +7,7 @@ import ActivityCard from "./ActivityCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "1rem",
+    //padding: "0.5rem",
   },
 }));
 
@@ -18,7 +18,9 @@ function ActivityContainer() {
 
   return (
     <>
-      <div className={classes.root}></div>
+      <div className={classes.root}>
+        <ActivityCard />
+      </div>
     </>
   );
 }
