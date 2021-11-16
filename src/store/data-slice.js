@@ -13,7 +13,7 @@ const dataSlice = createSlice({
         link: "/archive",
       },
     ],
-    dommyData: [
+    dummyData: [
       {
         id: 7834,
         created_at: "2018-04-19T09:38:41.000Z",

@@ -46,8 +46,8 @@ function NavTabs() {
       fontWeight: 500,
       fontSize: theme.typography.pxToRem(14),
       color: "black",
-      minWidth: 40,
-      margin: "0 2rem",
+      minWidth: 50,
+      margin: "0 3rem",
       "&.Mui-selected": {
         color: "black",
       },
