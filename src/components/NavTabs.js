@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    marginBottom: "0.8rem",
   },
   tabs: {
     "& .MuiTabs-indicator": {

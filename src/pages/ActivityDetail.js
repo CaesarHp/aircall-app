@@ -1,7 +1,13 @@
 import React from "react";
 
+import ActivityDetailContainer from "../components/ActivityDetailContainer";
+
 function ActivityDetail() {
-  return <div>ActivityDetail</div>;
+  return (
+    <>
+      <ActivityDetailContainer />
+    </>
+  );
 }
 
 export default ActivityDetail;
