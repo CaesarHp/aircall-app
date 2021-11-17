@@ -1,5 +1,4 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 
 import { Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,9 +25,70 @@ const useStyles = makeStyles((theme) => ({
 function ArchiveContainer() {
   const classes = useStyles();
 
-  const cardInfo = useSelector((state) => state.data.activityData);
+  useEffect(() => {
+    fetchActivity();
+  }, []);
 
-  const filteredCardInfo = cardInfo.filter((item) => item.is_archived);
+  const [cardData, setCardData] = useState([]);
+
+  const fetchActivity = async () => {
+    try {
+      const response = await fetch(
+        "https://aircall-job.herokuapp.com/activities"
+      );
+
+      if (!response.ok) {
+        throw new Error("Can not fetch data");
+      }
+
+      const data = await response.json();
+
+      setCardData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const postArchive = async (id, archive) => {
+    try {
+      const response = await fetch(
+        `https://aircall-job.herokuapp.com/activities/${id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ is_archived: !archive }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Can not fetch data");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await fetchActivity();
+    }
+  };
+
+  const resetActivity = async () => {
+    try {
+      const response = await fetch("https://aircall-job.herokuapp.com/reset");
+
+      if (!response.ok) {
+        throw new Error("Can not fetch data");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await fetchActivity();
+    }
+  };
+
+  const resetHandler = () => {
+    resetActivity();
+  };
+
+  const filteredCardInfo = cardData.filter((item) => item.is_archived);
 
   return (
     <>
@@ -46,6 +106,7 @@ function ArchiveContainer() {
               duration={item.duration}
               archive={item.is_archived}
               callType={item.call_type}
+              postArchive={postArchive}
             />
           ))
         ) : (
@@ -58,6 +119,7 @@ function ArchiveContainer() {
           <div className={classes.btnContainer}>
             <Button
               variant="contained"
+              onClick={resetHandler}
               className={classes.btn}
               startIcon={<UnarchiveIcon />}
             >

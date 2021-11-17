@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { styled } from "@mui/material/styles";
@@ -39,8 +38,6 @@ function NavTabs() {
     }
   }, [location]);
 
-  const tabsInfo = useSelector((state) => state.data.tabsInfo);
-
   const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
     ({ theme }) => ({
       textTransform: "none",
@@ -54,6 +51,11 @@ function NavTabs() {
       },
     })
   );
+
+  const tabsInfo = [
+    { name: "Activity", link: "./activity" },
+    { name: "Archive", link: "./archive" },
+  ];
 
   return (
     <>

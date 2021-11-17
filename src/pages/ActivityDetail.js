@@ -1,37 +1,47 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router";
 
 import ActivityDetailContainer from "../components/ActivityDetailContainer";
 
 function ActivityDetail() {
   const params = useParams();
-  const history = useHistory();
 
-  const allActivity = useSelector((state) => state.data.activityData);
+  const [detailData, setDetailData] = useState({});
 
-  const selectedActivity = allActivity.find(
-    (item) => item.id === Number(params.activityId)
-  );
+  const fetchDataById = async () => {
+    try {
+      const response = await fetch(
+        `https://aircall-job.herokuapp.com/activities/${params.activityId}`
+      );
 
-  if (!selectedActivity) {
-    history.push("/notfound");
-    return null;
-  }
+      if (!response.ok) {
+        throw new Error("Can not fetch data");
+      }
+
+      const data = await response.json();
+
+      setDetailData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataById();
+  }, []);
 
   return (
     <>
       <ActivityDetailContainer
-        id={selectedActivity.id}
-        createdAt={selectedActivity.created_at}
-        direction={selectedActivity.direction}
-        from={selectedActivity.from}
-        to={selectedActivity.to}
-        via={selectedActivity.via}
-        duration={selectedActivity.duration}
-        archive={selectedActivity.is_archived}
-        callType={selectedActivity.call_type}
+        id={detailData.id}
+        createdAt={detailData.created_at}
+        direction={detailData.direction}
+        from={detailData.from}
+        to={detailData.to}
+        via={detailData.via}
+        duration={detailData.duration}
+        archive={detailData.is_archived}
+        callType={detailData.call_type}
       />
     </>
   );

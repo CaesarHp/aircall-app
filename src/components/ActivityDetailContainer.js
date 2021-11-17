@@ -13,7 +13,7 @@ const useStyle = makeStyles((theme) => ({
   btnContainer: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "3rem",
+    margin: " 2rem 3rem",
   },
 }));
 

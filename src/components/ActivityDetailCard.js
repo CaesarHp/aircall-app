@@ -7,10 +7,9 @@ import { Avatar } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import PhoneCallbackIcon from "@mui/icons-material/PhoneCallback";
+
 const useStyle = makeStyles((theme) => ({
-  root: {
-    marginBottom: "5rem",
-  },
   avatarContainer: {
     display: "flex",
     justifyContent: "center",
@@ -24,16 +23,18 @@ const useStyle = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   },
   contentContainer: {
     display: "flex",
     flexDirection: "column",
     padding: "1rem",
     textAlign: "center",
-    //border: "1px solid #bdbdbd",
-    //borderRadius: "10px",
-    //margin: "0 2rem 1rem 2rem",
+  },
+  iconContainer: {
+    display: "flex",
+    justifyContent: "center",
+    padding: "1rem",
   },
 }));
 
@@ -54,40 +55,45 @@ function ActivityDetailCard({
 
   return (
     <>
-      <div className={classes.root}>
-        <Grid container>
-          <Grid item xs={12}>
-            <div className={classes.avatarContainer}>
-              <Avatar className={classes.avatar} />
-            </div>
-          </Grid>
-
-          <Grid item xs={12}>
-            <div className={classes.calleeContainer}>
-              <Typography variant="h6">{from}</Typography>
-              <Typography variant="body2">
-                {callType} {direction}
-              </Typography>
-            </div>
-          </Grid>
-
-          <Grid item xs={12}>
-            <div className={classes.contentContainer}>
-              <Typography variant="body1">To: {to}</Typography>
-              <Typography variant="body1">Via: {via}</Typography>
-            </div>
-          </Grid>
-
-          <Grid item xs={12}>
-            <div className={classes.contentContainer}>
-              <Typography variant="body1">{date}</Typography>
-              <Typography variant="body1">
-                Duration: {duration / 60}min
-              </Typography>
-            </div>
-          </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <div className={classes.avatarContainer}>
+            <Avatar className={classes.avatar} />
+          </div>
         </Grid>
-      </div>
+
+        <Grid item xs={12}>
+          <div className={classes.calleeContainer}>
+            <Typography variant="h6">{from}</Typography>
+            <Typography variant="body2">
+              {callType ? callType.toUpperCase() : callType}{" "}
+              {direction ? direction.toUpperCase() : direction}
+            </Typography>
+          </div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <div className={classes.iconContainer}>
+            <PhoneCallbackIcon fontSize="large" />
+          </div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <div className={classes.contentContainer}>
+            <Typography variant="body1">To: {to}</Typography>
+            <Typography variant="body1">Via: {via}</Typography>
+          </div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <div className={classes.contentContainer}>
+            <Typography variant="body1">{date}</Typography>
+            <Typography variant="body1">
+              Duration: {duration / 60}min
+            </Typography>
+          </div>
+        </Grid>
+      </Grid>
     </>
   );
 }

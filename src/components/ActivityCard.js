@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
 import Grid from "@mui/material/Grid";
@@ -29,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   iconContainer: {
     display: "flex",
     justifyContent: "center",
+    zIndex: 2000,
   },
   contentContainer: {
     display: "flex",
@@ -53,6 +53,7 @@ function ActivityCard({
   duration,
   archive,
   callType,
+  postArchive,
 }) {
   const classes = useStyles();
 
@@ -65,6 +66,10 @@ function ActivityCard({
     history.push(`/activity-detail/${id}`);
   };
 
+  const archiveHandler = () => {
+    postArchive(id, archive);
+  };
+
   return (
     <>
       <div>
@@ -74,32 +79,35 @@ function ActivityCard({
           </Typography>
         </div>
 
-        <Paper
-          elevation={0}
-          onClick={detailPageHandler}
-          className={classes.root}
-        >
+        <Paper elevation={0} className={classes.root}>
           <Grid container alignItems="center">
-            <Grid item xs={2}>
-              <div className={classes.iconContainer}>
-                <PhoneCallbackIcon fontSize="small" />
-              </div>
+            <Grid item xs={10}>
+              <Grid container alignItems="center" onClick={detailPageHandler}>
+                <Grid item xs={2}>
+                  <div className={classes.iconContainer}>
+                    <PhoneCallbackIcon fontSize="small" />
+                  </div>
+                </Grid>
+                <Grid item xs={8}>
+                  <div className={classes.contentContainer}>
+                    <Typography variant="body2" className={classes.title}>
+                      {from ? from : "Unknown"}
+                    </Typography>
+                    <Typography variant="body2">
+                      {to ? to : "Unknown"}
+                    </Typography>
+                  </div>
+                </Grid>
+                <Grid item xs={2}>
+                  <div className={classes.timeContainer}>
+                    <Typography variant="body2">{time}</Typography>
+                  </div>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <div className={classes.contentContainer}>
-                <Typography variant="body2" className={classes.title}>
-                  {from ? from : "Unknown"}
-                </Typography>
-                <Typography variant="body2">{to ? to : "Unknown"}</Typography>
-              </div>
-            </Grid>
+
             <Grid item xs={2}>
-              <div className={classes.timeContainer}>
-                <Typography variant="body2">{time}</Typography>
-              </div>
-            </Grid>
-            <Grid item xs={2}>
-              <div className={classes.iconContainer}>
+              <div onClick={archiveHandler} className={classes.iconContainer}>
                 <IconButton>
                   <ArchiveIcon />
                 </IconButton>
