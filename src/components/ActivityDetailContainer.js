@@ -1,8 +1,6 @@
 import React from "react";
 
 import Grid from "@mui/material/Grid";
-import { Typography } from "@material-ui/core";
-import { IconButton } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -15,35 +13,53 @@ const useStyle = makeStyles((theme) => ({
   btnContainer: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "2rem",
+    margin: "3rem",
   },
 }));
 
-function ActivityDetailContainer() {
+function ActivityDetailContainer({
+  id,
+  createdAt,
+  direction,
+  from,
+  to,
+  via,
+  duration,
+  archive,
+  callType,
+}) {
   const classes = useStyle();
 
   return (
     <>
-      <Grid conatiner>
+      <Grid container>
         <Grid item xs={12}>
-          <ActivityDetailCard />
+          <ActivityDetailCard
+            id={id}
+            createdAt={createdAt}
+            direction={direction}
+            from={from}
+            to={to}
+            via={via}
+            duration={duration}
+            archive={archive}
+            callType={callType}
+          />
         </Grid>
         <Grid item xs={12}>
           <div className={classes.btnContainer}>
-            {/* <IconButton>
-              <ArrowBackIosNewIcon />
-            </IconButton>
-
-            <IconButton>
-              <ArchiveIcon />
-            </IconButton> */}
             <Button
+              variant="contained"
               className={classes.btn}
               startIcon={<KeyboardArrowLeftIcon />}
             >
               Back
             </Button>
-            <Button className={classes.btn} startIcon={<ArchiveIcon />}>
+            <Button
+              variant="contained"
+              className={classes.btn}
+              startIcon={<ArchiveIcon />}
+            >
               Archive
             </Button>
           </div>
