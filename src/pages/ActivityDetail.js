@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router";
 
 import ActivityDetailContainer from "../components/ActivityDetailContainer";
 
 function ActivityDetail() {
   const params = useParams();
-  const history = useHistory();
 
   const [detailData, setDetailData] = useState({});
 
