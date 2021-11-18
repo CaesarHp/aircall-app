@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import ActivityDetailContainer from "../components/ActivityDetailContainer";
 
 function ActivityDetail() {
   const params = useParams();
+  const history = useHistory();
 
   const [detailData, setDetailData] = useState({});
 
@@ -52,6 +54,10 @@ function ActivityDetail() {
   useEffect(() => {
     callbackFetch();
   }, [callbackFetch]);
+
+  if (!detailData.id) {
+    return <div style={{ textAlign: "center" }}> Page not found</div>;
+  }
 
   return (
     <>
