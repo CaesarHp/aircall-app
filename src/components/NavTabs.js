@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -52,10 +52,13 @@ function NavTabs() {
     })
   );
 
-  const tabsInfo = [
-    { name: "Activity", link: "./activity" },
-    { name: "Archive", link: "./archive" },
-  ];
+  const tabsInfo = useMemo(
+    () => [
+      { name: "Activity", link: "/activity" },
+      { name: "Archive", link: "/archive" },
+    ],
+    []
+  );
 
   return (
     <>

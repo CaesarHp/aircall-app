@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 
+import { Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ActivityCard from "./ActivityCard";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  noItem: {
+    textAlign: "center",
+    padding: "1rem 0",
+  },
+  btnContainer: {
+    display: "flex",
+    justifyContent: "center",
+    margin: " 2rem 3rem",
+  },
 }));
 
 function ActivityContainer() {
@@ -80,24 +90,36 @@ function ActivityContainer() {
   return (
     <>
       <div className={classes.root}>
-        {filteredCardInfo.map((item) => (
-          <ActivityCard
-            key={item.id}
-            id={item.id}
-            createdAt={item.created_at}
-            direction={item.direction}
-            from={item.from}
-            to={item.to}
-            via={item.via}
-            duration={item.duration}
-            archive={item.is_archived}
-            callType={item.call_type}
-            postArchive={postArchive}
-          />
-        ))}
-        <div>
-          <Button onClick={resetHandler} variant="contained">
-            Reset
+        {filteredCardInfo.length > 0 ? (
+          filteredCardInfo.map((item) => (
+            <ActivityCard
+              key={item.id}
+              id={item.id}
+              createdAt={item.created_at}
+              direction={item.direction}
+              from={item.from}
+              to={item.to}
+              via={item.via}
+              duration={item.duration}
+              archive={item.is_archived}
+              callType={item.call_type}
+              postArchive={postArchive}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" className={classes.noItem}>
+            No activity
+          </Typography>
+        )}
+        <div className={classes.btnContainer}>
+          <Button
+            variant="outlined"
+            disableElevation
+            onClick={resetHandler}
+            className={classes.btn}
+            startIcon={<RefreshIcon />}
+          >
+            Refresh
           </Button>
         </div>
       </div>

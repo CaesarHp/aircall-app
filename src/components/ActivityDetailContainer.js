@@ -1,18 +1,18 @@
 import React from "react";
+import { useHistory } from "react-router";
 
 import Grid from "@mui/material/Grid";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import ArchiveIcon from "@mui/icons-material/Archive";
 
 import ActivityDetailCard from "./ActivityDetailCard";
 
 const useStyle = makeStyles((theme) => ({
   btnContainer: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     margin: " 2rem 3rem",
   },
 }));
@@ -29,6 +29,12 @@ function ActivityDetailContainer({
   callType,
 }) {
   const classes = useStyle();
+
+  const history = useHistory();
+
+  const backHandler = () => {
+    history.push("/activity");
+  };
 
   return (
     <>
@@ -49,18 +55,13 @@ function ActivityDetailContainer({
         <Grid item xs={12}>
           <div className={classes.btnContainer}>
             <Button
-              variant="contained"
+              variant="outlined"
+              disableElevation
+              onClick={backHandler}
               className={classes.btn}
               startIcon={<KeyboardArrowLeftIcon />}
             >
               Back
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.btn}
-              startIcon={<ArchiveIcon />}
-            >
-              Archive
             </Button>
           </div>
         </Grid>

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+
 import { useParams } from "react-router-dom";
 
 import ActivityDetailContainer from "../components/ActivityDetailContainer";
@@ -8,27 +9,49 @@ function ActivityDetail() {
 
   const [detailData, setDetailData] = useState({});
 
-  const fetchDataById = async () => {
+  const callbackFetch = useCallback(() => {
+    const fetchDataById = async () => {
+      try {
+        const response = await fetch(
+          `https://aircall-job.herokuapp.com/activities/${params.activityId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Can not fetch data");
+        }
+
+        const data = await response.json();
+
+        setDetailData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchDataById();
+  }, [params.activityId]);
+
+  const postArchive = async (id, archive) => {
     try {
       const response = await fetch(
-        `https://aircall-job.herokuapp.com/activities/${params.activityId}`
+        `https://aircall-job.herokuapp.com/activities/${id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ is_archived: !archive }),
+        }
       );
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
       }
-
-      const data = await response.json();
-
-      setDetailData(data);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchDataById();
-  }, []);
+    callbackFetch();
+  }, [callbackFetch]);
 
   return (
     <>
@@ -42,6 +65,8 @@ function ActivityDetail() {
         duration={detailData.duration}
         archive={detailData.is_archived}
         callType={detailData.call_type}
+        postArchive={postArchive}
+        callbackFetch={callbackFetch}
       />
     </>
   );

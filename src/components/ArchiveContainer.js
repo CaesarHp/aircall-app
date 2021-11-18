@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   btnContainer: {
     display: "flex",
     justifyContent: "center",
+    marginTop: "2rem",
   },
 }));
 
@@ -118,7 +119,8 @@ function ArchiveContainer() {
         {filteredCardInfo.length > 0 ? (
           <div className={classes.btnContainer}>
             <Button
-              variant="contained"
+              variant="outlined"
+              disableElevation
               onClick={resetHandler}
               className={classes.btn}
               startIcon={<UnarchiveIcon />}

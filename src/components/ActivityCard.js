@@ -9,8 +9,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import moment from "moment";
 
-import PhoneCallbackIcon from "@mui/icons-material/PhoneCallback";
+import PhoneMissedIcon from "@mui/icons-material/PhoneMissed";
+import PhoneIcon from "@mui/icons-material/Phone";
+import VoicemailIcon from "@mui/icons-material/Voicemail";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,13 +73,23 @@ function ActivityCard({
     postArchive(id, archive);
   };
 
+  let phoneIcon;
+
+  if (callType === "missed") {
+    phoneIcon = (
+      <PhoneMissedIcon fontSize="small" style={{ color: "#f44336" }} />
+    );
+  } else if (callType === "answered") {
+    phoneIcon = <PhoneIcon fontSize="small" style={{ color: "#4caf50" }} />;
+  } else if (callType === "voicemail") {
+    phoneIcon = <VoicemailIcon fontSize="small" style={{ color: "#2196f3" }} />;
+  }
+
   return (
     <>
       <div>
         <div className={classes.dateContainer}>
-          <Typography variant="body2" className={classes.title}>
-            {date}
-          </Typography>
+          <Typography variant="body2">{date}</Typography>
         </div>
 
         <Paper elevation={0} className={classes.root}>
@@ -84,9 +97,7 @@ function ActivityCard({
             <Grid item xs={10}>
               <Grid container alignItems="center" onClick={detailPageHandler}>
                 <Grid item xs={2}>
-                  <div className={classes.iconContainer}>
-                    <PhoneCallbackIcon fontSize="small" />
-                  </div>
+                  <div className={classes.iconContainer}>{phoneIcon}</div>
                 </Grid>
                 <Grid item xs={8}>
                   <div className={classes.contentContainer}>
@@ -109,7 +120,7 @@ function ActivityCard({
             <Grid item xs={2}>
               <div onClick={archiveHandler} className={classes.iconContainer}>
                 <IconButton>
-                  <ArchiveIcon />
+                  {archive ? <ArchiveIcon /> : <UnarchiveIcon />}
                 </IconButton>
               </div>
             </Grid>
