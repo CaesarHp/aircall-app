@@ -6,6 +6,9 @@ import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
 import ActivityCard from "./ActivityCard";
 
+const getDataApi = process.env.AIR_CALL_GET_DATA_API;
+const resetDataApi = process.env.AIR_CALL_RESET_DATA_API;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -34,9 +37,7 @@ function ArchiveContainer() {
 
   const fetchActivity = async () => {
     try {
-      const response = await fetch(
-        "https://aircall-job.herokuapp.com/activities"
-      );
+      const response = await fetch(getDataApi);
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
@@ -52,14 +53,11 @@ function ArchiveContainer() {
 
   const postArchive = async (id, archive) => {
     try {
-      const response = await fetch(
-        `https://aircall-job.herokuapp.com/activities/${id}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ is_archived: !archive }),
-        }
-      );
+      const response = await fetch(`${getDataApi}${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_archived: !archive }),
+      });
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
@@ -73,7 +71,7 @@ function ArchiveContainer() {
 
   const resetActivity = async () => {
     try {
-      const response = await fetch("https://aircall-job.herokuapp.com/reset");
+      const response = await fetch(resetDataApi);
 
       if (!response.ok) {
         throw new Error("Can not fetch data");

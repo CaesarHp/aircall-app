@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 
 import ActivityDetailContainer from "../components/ActivityDetailContainer";
 
+const getDataApi = process.env.AIR_CALL_GET_DATA_API;
+
 function ActivityDetail() {
   const params = useParams();
 
@@ -12,9 +14,7 @@ function ActivityDetail() {
   const callbackFetch = useCallback(() => {
     const fetchDataById = async () => {
       try {
-        const response = await fetch(
-          `https://aircall-job.herokuapp.com/activities/${params.activityId}`
-        );
+        const response = await fetch(`${getDataApi}${params.activityId}`);
 
         if (!response.ok) {
           throw new Error("Can not fetch data");
@@ -32,14 +32,11 @@ function ActivityDetail() {
 
   const postArchive = async (id, archive) => {
     try {
-      const response = await fetch(
-        `https://aircall-job.herokuapp.com/activities/${id}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ is_archived: !archive }),
-        }
-      );
+      const response = await fetch(`${getDataApi}${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_archived: !archive }),
+      });
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
