@@ -7,9 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import ActivityCard from "./ActivityCard";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
-const getDataApi = process.env.AIR_CALL_GET_DATA_API;
-const resetDataApi = process.env.AIR_CALL_RESET_DATA_API;
-
 const useStyles = makeStyles((theme) => ({
   noItem: {
     textAlign: "center",
@@ -33,7 +30,9 @@ function ActivityContainer() {
 
   const fetchActivity = async () => {
     try {
-      const response = await fetch(getDataApi);
+      const response = await fetch(
+        "https://aircall-job.herokuapp.com/activities"
+      );
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
@@ -49,11 +48,14 @@ function ActivityContainer() {
 
   const postArchive = async (id, archive) => {
     try {
-      const response = await fetch(`${getDataApi}${id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ is_archived: !archive }),
-      });
+      const response = await fetch(
+        `https://aircall-job.herokuapp.com/activities/${id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ is_archived: !archive }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
@@ -67,7 +69,7 @@ function ActivityContainer() {
 
   const resetActivity = async () => {
     try {
-      const response = await fetch(resetDataApi);
+      const response = await fetch("https://aircall-job.herokuapp.com/reset");
 
       if (!response.ok) {
         throw new Error("Can not fetch data");
